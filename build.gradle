@@ -1,0 +1,154 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+
+plugins {
+    id 'java'
+    id 'application'
+    id "org.openjfx.javafxplugin" version "0.0.9"
+}
+
+group 'dev.pinter'
+version '0.1'
+
+targetCompatibility = 15
+
+mainClassName = "dev.pinter.jfxapp.Main"
+ext.distAppName = "JavaFXApp"
+ext.appDescription = "JavaFX Application"
+ext.moduleName = 'jfxapp.main'
+ext.javafxSdkBinDir = new File(projectDir,String.format("sdk/javafx-sdk-%s-%s/bin",targetCompatibility,System.getProperty("os.arch")))
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'junit:junit:4.13'
+    implementation 'org.slf4j:slf4j-jdk14:1.7.30'
+}
+
+javafx {
+    version = targetCompatibility
+    modules = ['javafx.fxml', 'javafx.controls']
+}
+
+
+ext.javahome = System.properties['java.home']
+
+import org.apache.tools.ant.taskdefs.condition.Os;
+if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+    ext.binjlink = javahome + "/bin/jlink.exe"
+    ext.binjpackage = javahome + "/bin/jpackage.exe"
+} else {
+    ext.binjlink = javahome + "/bin/jlink"
+    ext.binjpackage = javahome + "/bin/jpackage"
+}
+
+jar {
+    manifest {
+        attributes('Class-Path': configurations.runtimeClasspath.collect { "lib" + File.separator + it.getName() }.join(' '),
+                'Implementation-Title': distAppName,
+                'Implementation-Version': project.version,
+                'Automatic-Module-Name': moduleName,
+                'Main-Class': 'dev.pinter.jfxapp.Main')
+    }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+sourceSets {
+    main {
+        output.resourcesDir = main.java.outputDir
+    }
+}
+
+task copyAppimageFiles(type: Copy) {
+    dependsOn(jar)
+    doFirst {
+        mkdir "$buildDir/appimage-files"
+    }
+    from(configurations.runtimeClasspath.findAll {
+        !it.getName().matches("javafx.*.jar")
+    }).collect { it.getPath() }
+    into "$buildDir/appimage-files"
+}
+
+task jlink(type: Exec) {
+    dependsOn clean
+    dependsOn build
+    tasks.build.mustRunAfter(clean)
+    dependsOn copyAppimageFiles
+    dependsOn 'copyAppimageModules'
+    workingDir buildDir
+
+    commandLine binjlink,
+            '-J-Djlink.debug=true',
+            '--module-path', configurations.runtimeClasspath.collect {it }.join(File.pathSeparator)+ File.pathSeparator + "${buildDir}/appimage-modules",
+            '--add-modules', (moduleName+",javafx.base,javafx.fxml,javafx.graphics,javafx.controls,java.base,jdk.unsupported,java.logging"),
+            '--output', new File("${buildDir}", '/jre-image'),
+            '--compress', '2',
+            '--no-header-files',
+            '--no-man-pages'
+            '--strip-native-commands'
+}
+
+task appimage(type: Exec) {
+    dependsOn 'jlink'
+    workingDir buildDir
+
+    commandLine binjpackage,
+            '--type', 'app-image',
+            '--verbose',
+            '--runtime-image', "${buildDir}/jre-image",
+            '--module', "${moduleName}/${mainClassName}",
+            '--dest', "${buildDir}/app-image",
+            '--name', distAppName,
+            '--icon', "${projectDir}/src/main/resources/icon/icon48.ico",
+            '--app-version', project.version,
+            '--vendor', 'Flavio Freitas Pinter',
+            '--input', "${buildDir}/appimage-files",
+            '--description', appDescription,
+            '--java-options',
+            '-XX:+UseSerialGC -XX:MinHeapFreeRatio=10 -XX:MaxHeapFreeRatio=15 ' +
+            '--add-reads jfxapp.main=ALL-UNNAMED'
+
+    doLast {
+        copy {
+            if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+                from javafxSdkBinDir.listFiles().findAll {
+                    it.getName().equals("decora_sse.dll") ||
+                            it.getName().equals("fxplugins.dll") ||
+                            it.getName().equals("glass.dll") ||
+                            it.getName().equals("javafx_font.dll") ||
+                            it.getName().equals("javafx_iio.dll") ||
+                            it.getName().equals("prism_common.dll") ||
+                            it.getName().equals("prism_d3d.dll") ||
+                            it.getName().equals("prism_sw.dll")
+                }.collect()
+                into "$buildDir/app-image/${distAppName}"
+            } else {
+                from javafxSdkLibDir.listFiles().findAll { it.getName().endsWith('.so') }.collect()
+                into "$buildDir/app-image/${distAppName}"
+            }
+        }
+        new File(buildDir, "app-image/${distAppName}/jfxwebkit.dll").delete()
+        new File(buildDir, "app-image/${distAppName}/ucrtbase.dll").delete()
+        new File(buildDir, "app-image/${distAppName}/gstreamer-lite.dll").delete()
+        new File(buildDir, "app-image/${distAppName}/glib-lite.dll").delete()
+        new File(buildDir, "jre-image").deleteDir()
+    }
+}
+
+task copyAppimageModules(type: Copy) {
+    dependsOn(jar)
+    doFirst {
+        mkdir "$buildDir/appimage-modules"
+    }
+    from jar
+    into "$buildDir/appimage-modules"
+}
+
+task archiveAppimage(type: Zip) {
+    dependsOn 'appimage'
+    from "${buildDir}/app-image"
+    archiveFileName = "${distAppName}-${project.version}.zip"
+    destinationDirectory = file("$buildDir")
+}

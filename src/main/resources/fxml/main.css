@@ -1,0 +1,11 @@
+.rootAnchorPane {
+    -fx-background-color: #e0e0e0;
+}
+
+.buttonWhiteText {
+    -fx-text-fill: #ffffff !important;
+}
+
+.labelWhiteText {
+    -fx-text-fill: #ffffff !important;
+}
