@@ -1,5 +1,3 @@
-import org.apache.tools.ant.taskdefs.condition.Os
-
 plugins {
     id 'java'
     id 'application'
@@ -11,11 +9,13 @@ version '0.1'
 
 targetCompatibility = 15
 
-mainClassName = "dev.pinter.jfxapp.Main"
+ext.mainPackageName = "dev.pinter.jfxapp"
 ext.distAppName = "JavaFXApp"
 ext.appDescription = "JavaFX Application"
 ext.moduleName = 'jfxapp.main'
-ext.javafxSdkBinDir = new File(projectDir,String.format("sdk/javafx-sdk-%s-%s/bin",targetCompatibility,System.getProperty("os.arch")))
+ext.appAuthor = 'Flavio Freitas Pinter'
+ext.javafxSdkBinDir = file(String.format("%s/sdk/javafx-sdk-%s-%s/bin", projectDir, targetCompatibility, System.getProperty("os.arch")))
+mainClassName = "${mainPackageName}.Main"
 
 repositories {
     mavenCentral()
@@ -34,7 +34,8 @@ javafx {
 
 ext.javahome = System.properties['java.home']
 
-import org.apache.tools.ant.taskdefs.condition.Os;
+import org.apache.tools.ant.taskdefs.condition.Os
+
 if (Os.isFamily(Os.FAMILY_WINDOWS)) {
     ext.binjlink = javahome + "/bin/jlink.exe"
     ext.binjpackage = javahome + "/bin/jpackage.exe"
@@ -49,7 +50,7 @@ jar {
                 'Implementation-Title': distAppName,
                 'Implementation-Version': project.version,
                 'Automatic-Module-Name': moduleName,
-                'Main-Class': 'dev.pinter.jfxapp.Main')
+                'Main-Class': mainClassName)
     }
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
@@ -81,8 +82,8 @@ task jlink(type: Exec) {
 
     commandLine binjlink,
             '-J-Djlink.debug=true',
-            '--module-path', configurations.runtimeClasspath.collect {it }.join(File.pathSeparator)+ File.pathSeparator + "${buildDir}/appimage-modules",
-            '--add-modules', (moduleName+",javafx.base,javafx.fxml,javafx.graphics,javafx.controls,java.base,jdk.unsupported,java.logging"),
+            '--module-path', configurations.runtimeClasspath.collect { it }.join(File.pathSeparator) + File.pathSeparator + "${buildDir}/appimage-modules",
+            '--add-modules', "${moduleName},javafx.base,javafx.fxml,javafx.graphics,javafx.controls,java.base,jdk.unsupported,java.logging",
             '--output', new File("${buildDir}", '/jre-image'),
             '--compress', '2',
             '--no-header-files',
@@ -103,12 +104,12 @@ task appimage(type: Exec) {
             '--name', distAppName,
             '--icon', "${projectDir}/src/main/resources/icon/icon48.ico",
             '--app-version', project.version,
-            '--vendor', 'Flavio Freitas Pinter',
+            '--vendor', appAuthor,
             '--input', "${buildDir}/appimage-files",
             '--description', appDescription,
             '--java-options',
             '-XX:+UseSerialGC -XX:MinHeapFreeRatio=10 -XX:MaxHeapFreeRatio=15 ' +
-            '--add-reads jfxapp.main=ALL-UNNAMED'
+            "--add-reads ${moduleName}=ALL-UNNAMED"
 
     doLast {
         copy {
@@ -151,4 +152,24 @@ task archiveAppimage(type: Zip) {
     from "${buildDir}/app-image"
     archiveFileName = "${distAppName}-${project.version}.zip"
     destinationDirectory = file("$buildDir")
+}
+
+run {
+    inputs.property("moduleName", moduleName)
+    doFirst {
+        jvmArgs = [
+                '-XX:+UseSerialGC', '-XX:MinHeapFreeRatio=10', '-XX:MaxHeapFreeRatio=15',
+                '--add-reads', "${moduleName}=ALL-UNNAMED",
+                '--add-opens', 'javafx.base/com.sun.javafx.reflect=ALL-UNNAMED',
+                '--add-opens', "${moduleName}/${mainPackageName}=ALL-UNNAMED",
+                '--add-opens', "${moduleName}/${mainPackageName}.core=ALL-UNNAMED",
+                '--add-opens', "${moduleName}/${mainPackageName}.gui=ALL-UNNAMED",
+                '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
+                '--module-path', classpath.asPath,
+                '--class-path', classpath.asPath,
+                '--module', moduleName,
+                '--patch-module', "$moduleName=" + files(sourceSets.main.output.resourcesDir).asPath,
+        ]
+        classpath = files()
+    }
 }
