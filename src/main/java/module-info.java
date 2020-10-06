@@ -2,6 +2,7 @@ module jfxapp.main {
     requires javafx.controls;
     requires java.base;
     requires javafx.fxml;
+    requires java.desktop;
     requires static org.slf4j;
     exports dev.pinter.jfxapp.gui to javafx.fxml;
     exports dev.pinter.jfxapp to javafx.graphics;
