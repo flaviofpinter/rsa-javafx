@@ -50,4 +50,37 @@ public class Util {
         return systemUsesLightTheme == 1;
     }
 
+    public static boolean isOsLinux() {
+        return SystemUtils.IS_OS_LINUX;
+    }
+
+    public static boolean isLinuxDesktopSupportsSystray() {
+        return !isLinuxDesktopGnome() && !isLinuxDesktopKde() && !isLinuxDesktopUnity();
+    }
+
+    public static boolean isLinuxDesktopGnome() {
+        return isLinuxDesktopX("gnome") && !isLinuxDesktopX("budgie:gnome");
+    }
+
+    public static boolean isLinuxDesktopKde() {
+        return isLinuxDesktopX("kde");
+    }
+
+    public static boolean isLinuxDesktopUnity() {
+        return isLinuxDesktopX("unity");
+    }
+
+    public static boolean isLinuxDesktopXfce() {
+        return isLinuxDesktopX("xfce");
+    }
+
+    public static boolean isLinuxDesktopCinnamon() {
+        return isLinuxDesktopX("cinnamon");
+    }
+
+    public static boolean isLinuxDesktopX(String value) {
+        return SystemUtils.IS_OS_LINUX && System.getenv("XDG_CURRENT_DESKTOP") != null &&
+                System.getenv("XDG_CURRENT_DESKTOP").toLowerCase().contains(value);
+    }
+
 }

@@ -13,6 +13,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,12 +34,17 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource(Constants.MAIN_FXML), Language.get().getResourceBundleUI());
         logger.info(Language.get().getMsg("log.debug.enter-start"));
 
-        createSystray(primaryStage);
+        try {
+            createSystray(primaryStage);
+        } catch (UnsupportedOperationException e) {
+            logger.error("Error", e);
+        }
 
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
 
         primaryStage.setTitle(Language.get().getMsg("window.title"));
+        primaryStage.getIcons().addAll(Constants.ALL_PNG_ICONS);
 
         primaryStage.addEventHandler(KeyEvent.KEY_PRESSED, (event -> {
             logger.info("key pressed: " + event.getCode().getCode());
@@ -49,10 +55,21 @@ public class Main extends Application {
             }
         }));
 
+        primaryStage.addEventHandler(WindowEvent.WINDOW_CLOSE_REQUEST, (event -> {
+            if(Platform.isImplicitExit()) {
+                Platform.exit();
+                System.exit(0);
+            }
+        }));
         primaryStage.show();
     }
 
     private SystemTrayIcon createSystray(Stage primaryStage) throws IOException, AWTException {
+        if(Util.isOsLinux() && !Util.isLinuxDesktopSupportsSystray()) {
+            // some linux desktop systems shows a broken legacy systray icon, don't try...
+            throw new UnsupportedOperationException("Desktop blacklisted, system tray disabled");
+        }
+
         final SystemTrayIcon systemTrayIcon = new SystemTrayIcon(primaryStage,
                 "JavaFX App",
                 Constants.TRAY_ICON,

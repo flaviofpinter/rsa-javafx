@@ -1,3 +1,5 @@
+import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform
+
 plugins {
     id 'java'
     id 'application'
@@ -9,12 +11,22 @@ version '0.1'
 
 targetCompatibility = 15
 
+OperatingSystem OS = DefaultNativePlatform.currentOperatingSystem
+
 ext.mainPackageName = "dev.pinter.jfxapp"
 ext.distAppName = "JavaFXApp"
 ext.appDescription = "JavaFX Application"
 ext.moduleName = 'jfxapp.main'
 ext.appAuthor = 'Flavio Freitas Pinter'
-ext.javafxSdkBinDir = file(String.format("%s/sdk/javafx-sdk-%s-%s/bin", projectDir, targetCompatibility, System.getProperty("os.arch")))
+
+
+ext.javafxSdkDir = file(String.format("%s/sdk/javafx-sdk-%s-%s-%s", projectDir, targetCompatibility, OS.toFamilyName().toLowerCase(), System.getProperty("os.arch").toLowerCase()))
+ext.javafxSdkBinDir = file("${javafxSdkDir}/bin");
+ext.javafxSdkLibDir = file("${javafxSdkDir}/lib");
+
+if (!file(javafxSdkDir).directory) {
+    throw new GradleException(String.format("ERROR: openjfx-sdk for java %s (%s) not found in %s", targetCompatibility, System.getProperty("os.arch"), javafxSdkDir))
+}
 mainClassName = "${mainPackageName}.Main"
 
 repositories {
@@ -36,14 +48,15 @@ javafx {
 
 ext.javahome = System.properties['java.home']
 
-import org.apache.tools.ant.taskdefs.condition.Os
 
-if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+if (OS.windows) {
     ext.binjlink = javahome + "/bin/jlink.exe"
     ext.binjpackage = javahome + "/bin/jpackage.exe"
+    ext.appImageIcon = "${projectDir}/src/main/resources/icon/java128.ico"
 } else {
     ext.binjlink = javahome + "/bin/jlink"
     ext.binjpackage = javahome + "/bin/jpackage"
+    ext.appImageIcon = "${projectDir}/src/main/resources/icon/java128.png"
 }
 
 jar {
@@ -82,6 +95,10 @@ task jlink(type: Exec) {
     dependsOn 'copyAppimageModules'
     workingDir buildDir
 
+    doFirst {
+        println "Using " + javafxSdkBinDir
+    }
+
     commandLine binjlink,
             '-J-Djlink.debug=true',
             '--module-path', configurations.runtimeClasspath.collect { it }.join(File.pathSeparator) + File.pathSeparator + "${buildDir}/appimage-modules",
@@ -89,7 +106,7 @@ task jlink(type: Exec) {
             '--output', new File("${buildDir}", '/jre-image'),
             '--compress', '2',
             '--no-header-files',
-            '--no-man-pages'
+            '--no-man-pages',
             '--strip-native-commands'
 }
 
@@ -104,7 +121,7 @@ task appimage(type: Exec) {
             '--module', "${moduleName}/${mainClassName}",
             '--dest', "${buildDir}/app-image",
             '--name', distAppName,
-            '--icon', "${projectDir}/src/main/resources/icon/icon48.ico",
+            '--icon', appImageIcon,
             '--app-version', project.version,
             '--vendor', appAuthor,
             '--input', "${buildDir}/appimage-files",
@@ -115,27 +132,61 @@ task appimage(type: Exec) {
 
     doLast {
         copy {
-            if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+            if (OS.isWindows()) {
                 from javafxSdkBinDir.listFiles().findAll {
-                    it.getName().equals("decora_sse.dll") ||
-                            it.getName().equals("fxplugins.dll") ||
-                            it.getName().equals("glass.dll") ||
-                            it.getName().equals("javafx_font.dll") ||
-                            it.getName().equals("javafx_iio.dll") ||
-                            it.getName().equals("prism_common.dll") ||
-                            it.getName().equals("prism_d3d.dll") ||
-                            it.getName().equals("prism_sw.dll")
+                    it.getName() == "decora_sse.dll" ||
+                            it.getName() == "fxplugins.dll" ||
+                            it.getName() == "glass.dll" ||
+                            it.getName() == "javafx_font.dll" ||
+                            it.getName() == "javafx_iio.dll" ||
+                            it.getName() == "prism_common.dll" ||
+                            it.getName() == "prism_d3d.dll" ||
+                            it.getName() == "prism_sw.dll"
                 }.collect()
                 into "$buildDir/app-image/${distAppName}"
             } else {
-                from javafxSdkLibDir.listFiles().findAll { it.getName().endsWith('.so') }.collect()
-                into "$buildDir/app-image/${distAppName}"
+                from javafxSdkLibDir.listFiles().findAll {
+                            it.getName() == "libdecora_sse.so" ||
+                            it.getName() == "libfxplugins.so" ||
+                            it.getName() == "libglass.so" ||
+                            it.getName() == "libglassgtk2.so" ||
+                            it.getName() == "libglassgtk3.so" ||
+                            it.getName() == "libjavafx_font.so" ||
+                            it.getName() == "libjavafx_font_freetype.so" ||
+                            it.getName() == "libjavafx_font_pango.so" ||
+                            it.getName() == "libjavafx_iio.so" ||
+                            it.getName() == "libprism_common.so" ||
+                            it.getName() == "libprism_es2.so" ||
+                            it.getName() == "libprism_sw.so"
+                }.collect()
+                into "$buildDir/app-image/${distAppName}/lib"
             }
         }
-        new File(buildDir, "app-image/${distAppName}/jfxwebkit.dll").delete()
-        new File(buildDir, "app-image/${distAppName}/ucrtbase.dll").delete()
-        new File(buildDir, "app-image/${distAppName}/gstreamer-lite.dll").delete()
-        new File(buildDir, "app-image/${distAppName}/glib-lite.dll").delete()
+        if (OS.isWindows()) {
+            new File(buildDir, "app-image/${distAppName}/jfxwebkit.dll").delete()
+            new File(buildDir, "app-image/${distAppName}/ucrtbase.dll").delete()
+            new File(buildDir, "app-image/${distAppName}/gstreamer-lite.dll").delete()
+            new File(buildDir, "app-image/${distAppName}/glib-lite.dll").delete()
+        } else {
+            new File("$buildDir/app-image/${distAppName}/lib").listFiles().findAll {
+                        it.getName().startsWith("libavplugin-") ||
+                        it.getName() == "libjfxwebkit.so" ||
+                        it.getName() == "libgstreamer-lite.so" ||
+                        it.getName() == "libjfxmedia.so"
+            }.collect().findAll { println "delete " + it.getName() }
+            println "Stripping debug info from native binaries"
+            new File("$buildDir/app-image/${distAppName}").eachFileRecurse {
+                if(!it.isFile()) {
+                    return;
+                }
+                def cmd = ["strip",it.getAbsolutePath()]
+                exec {
+                    errorOutput = new ByteArrayOutputStream();
+                    ignoreExitValue = true
+                    commandLine(cmd)
+                }
+            }
+        }
         new File(buildDir, "jre-image").deleteDir()
     }
 }

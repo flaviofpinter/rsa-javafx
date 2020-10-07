@@ -67,6 +67,7 @@ public class SystemTrayIcon {
 
         systemTray = SystemTray.getSystemTray();
         trayIcon = new TrayIcon(ImageIO.read(getClass().getResourceAsStream(iconPath)), tooltip);
+        trayIcon.setImageAutoSize(true);
         trayIcon.addActionListener(event -> Platform.runLater(this::toggleStage));
 
         setJPopupMouseListener();
@@ -98,6 +99,7 @@ public class SystemTrayIcon {
         hiddenDialog = new JDialog((Frame) null);
         hiddenDialog.setUndecorated(true);
         hiddenDialog.setSize(0, 0);
+        hiddenDialog.setType(Window.Type.POPUP);
         hiddenDialog.addWindowFocusListener(new WindowFocusListener() {
             @Override
             public void windowLostFocus(final WindowEvent e) {
@@ -110,14 +112,21 @@ public class SystemTrayIcon {
         });
 
         trayIcon.addMouseListener(new MouseAdapter() {
-            public void mouseReleased(MouseEvent e) {
+            public void handleMouseEventPopup(MouseEvent e) {
                 if (e.isPopupTrigger()) {
                     popupMenu.setInvoker(hiddenDialog);
                     popupMenu.setLocation(e.getX(), e.getY());
-                    hiddenDialog.setLocation(0, 0);
+                    hiddenDialog.setLocation(e.getX(), e.getY());
+
                     hiddenDialog.setVisible(true);
                     popupMenu.setVisible(true);
                 }
+            }
+            public void mousePressed(MouseEvent e) {
+                handleMouseEventPopup(e);
+            }
+            public void mouseReleased(MouseEvent e) {
+                handleMouseEventPopup(e);
             }
         });
     }
@@ -166,6 +175,7 @@ public class SystemTrayIcon {
         systemTray.remove(trayIcon);
     }
 
+    @SuppressWarnings("UnusedReturnValue")
     public JMenuItem addMenuItem(String text, ActionListener actionListener) {
         JMenuItem menuItem = new JMenuItem(formatMenuItemText(text));
         menuItem.addActionListener(actionListener);
@@ -173,6 +183,7 @@ public class SystemTrayIcon {
         return menuItem;
     }
 
+    @SuppressWarnings("UnusedReturnValue")
     public Component addComponent(Component component) {
         return popupMenu.add(component);
     }
