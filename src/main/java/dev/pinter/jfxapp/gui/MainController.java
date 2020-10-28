@@ -44,46 +44,46 @@ public class MainController implements Initializable {
         helloWorldText.setText(helloWorldText.getText()
                 .replaceAll("(\\d+)$", String.valueOf(newRandomInt())));
 
-        changeButtonColor();
+//        changeButtonColor();
 
-        changePaneBackground();
+//        changePaneBackground();
     }
 
-    private void changePaneBackground() {
-        int red = newRandomInt();
-        int green = newRandomInt();
-        int blue = newRandomInt();
+//    private void changePaneBackground() {
+//        int red = newRandomInt();
+//        int green = newRandomInt();
+//        int blue = newRandomInt();
+//
+//        rootAnchorPane.setStyle(String.format("-fx-background-color: #%02x%02x%02x", red, green, blue));
+//
+//        if (red < 128 && green < 128 && blue < 128) {
+//            helloWorldLabel.getStyleClass().add("labelWhiteText");
+//        } else {
+//            helloWorldLabel.getStyleClass().removeIf(f -> f.equals("labelWhiteText"));
+//        }
+//
+//    }
 
-        rootAnchorPane.setStyle(String.format("-fx-background-color: #%02x%02x%02x", red, green, blue));
-
-        if (red < 128 && green < 128 && blue < 128) {
-            helloWorldLabel.getStyleClass().add("labelWhiteText");
-        } else {
-            helloWorldLabel.getStyleClass().removeIf(f -> f.equals("labelWhiteText"));
-        }
-
-    }
-
-    private void changeButtonColor() {
-        int red = newRandomInt();
-        int green = newRandomInt();
-        int blue = newRandomInt();
-
-        if (red < 128 && green < 128 && blue < 128) {
-            helloWorldButton.getStyleClass().add("buttonWhiteText");
-        } else {
-            helloWorldButton.getStyleClass().removeIf(f -> f.equals("buttonWhiteText"));
-        }
-
-        logger.info(String.format("setting button background color to #%s%s%s (%d,%d,%d)",
-                Integer.toHexString(red),
-                Integer.toHexString(green),
-                Integer.toHexString(blue),
-                red, green, blue
-        ));
-
-        helloWorldButton.setStyle(String.format("-fx-background-color: #%02x%02x%02x", red, green, blue));
-    }
+//    private void changeButtonColor() {
+//        int red = newRandomInt();
+//        int green = newRandomInt();
+//        int blue = newRandomInt();
+//
+//        if (red < 128 && green < 128 && blue < 128) {
+//            helloWorldButton.getStyleClass().add("buttonWhiteText");
+//        } else {
+//            helloWorldButton.getStyleClass().removeIf(f -> f.equals("buttonWhiteText"));
+//        }
+//
+//        logger.info(String.format("setting button background color to #%s%s%s (%d,%d,%d)",
+//                Integer.toHexString(red),
+//                Integer.toHexString(green),
+//                Integer.toHexString(blue),
+//                red, green, blue
+//        ));
+//
+//        helloWorldButton.setStyle(String.format("-fx-background-color: #%02x%02x%02x", red, green, blue));
+//    }
 
     private int newRandomInt() {
         return new Random().nextInt(255);
