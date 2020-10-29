@@ -56,7 +56,7 @@ public class Main extends Application {
         }));
 
         primaryStage.addEventHandler(WindowEvent.WINDOW_CLOSE_REQUEST, (event -> {
-            if(Platform.isImplicitExit()) {
+            if (Platform.isImplicitExit()) {
                 Platform.exit();
                 System.exit(0);
             }
@@ -65,7 +65,7 @@ public class Main extends Application {
     }
 
     private SystemTrayIcon createSystray(Stage primaryStage) throws IOException, AWTException {
-        if(Util.isOsLinux() && !Util.isLinuxDesktopSupportsSystray()) {
+        if (Util.isOsLinux() && !Util.isLinuxDesktopSupportsSystray()) {
             // some linux desktop systems shows a broken legacy systray icon, don't try...
             throw new UnsupportedOperationException("Desktop blacklisted, system tray disabled");
         }
