@@ -2,6 +2,7 @@ package dev.pinter.jfxapp.gui;
 
 import dev.pinter.jfxapp.Main;
 import dev.pinter.jfxapp.core.Constants;
+import dev.pinter.jfxapp.core.Cryptography;
 import dev.pinter.jfxapp.core.Language;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,6 +20,8 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URL;
+import java.security.KeyPair;
+import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 import java.util.ResourceBundle;
 
@@ -36,6 +39,9 @@ public class MainController implements Initializable {
 
     @FXML
     public Label mainDecisionLabel;
+
+    public MainController() throws NoSuchAlgorithmException {
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

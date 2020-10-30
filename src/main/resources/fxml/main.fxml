@@ -9,7 +9,7 @@
    <children>
       <Label fx:id="mainDecisionLabel" layoutX="77.0" layoutY="34.0" prefHeight="57.0" prefWidth="400.0" text="%fxml.main.mainDecisionLabel" textAlignment="RIGHT" AnchorPane.leftAnchor="77.0">
          <font>
-            <Font size="19.0" />
+            <Font size="17.0" />
          </font></Label>
       <Button fx:id="encryptionDecisionButton" layoutX="77.0" layoutY="109.0" mnemonicParsing="false" onAction="#encryptButtonAction" prefHeight="48.0" prefWidth="171.0" text="%fxml.main.encryptionDecisionButton">
          <font>

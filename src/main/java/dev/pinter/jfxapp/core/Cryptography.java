@@ -13,7 +13,7 @@ public class Cryptography {
 
     public KeyPair keyPairGen() throws NoSuchAlgorithmException {
         KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");
-        generator.initialize(2048, new SecureRandom());
+        generator.initialize(1024, new SecureRandom());
         return generator.generateKeyPair();
     }
 

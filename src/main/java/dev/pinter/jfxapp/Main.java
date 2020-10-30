@@ -1,6 +1,7 @@
 package dev.pinter.jfxapp;
 
 import dev.pinter.jfxapp.core.Constants;
+import dev.pinter.jfxapp.core.Cryptography;
 import dev.pinter.jfxapp.core.Language;
 import dev.pinter.jfxapp.core.Util;
 import dev.pinter.jfxapp.gui.SystemTrayIcon;
@@ -20,9 +21,15 @@ import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.security.KeyPair;
+import java.security.NoSuchAlgorithmException;
 
 public class Main extends Application {
     private static final Logger logger = LoggerFactory.getLogger(Main.class);
+    public KeyPair keys = new Cryptography().keyPairGen();
+
+    public Main() throws NoSuchAlgorithmException {
+    }
 
     public static void main(String... args) {
         logger.info(Language.get().getMsg("log.debug.enter-main"));
