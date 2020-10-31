@@ -9,14 +9,15 @@ plugins {
 group 'dev.pinter'
 version '0.1'
 
+sourceCompatibility = 14
 targetCompatibility = 14
 
 OperatingSystem OS = DefaultNativePlatform.currentOperatingSystem
 
-ext.mainPackageName = "dev.pinter.jfxapp"
-ext.distAppName = "JavaFXApp"
-ext.appDescription = "JavaFX Application"
-ext.moduleName = 'jfxapp.main'
+ext.mainPackageName = "dev.pinter.rsaapp"
+ext.distAppName = "RSAApp"
+ext.appDescription = "JavaFX RSA Cryptography Application"
+ext.moduleName = 'rsaapp.main'
 ext.appAuthor = 'Flavio Freitas Pinter'
 
 

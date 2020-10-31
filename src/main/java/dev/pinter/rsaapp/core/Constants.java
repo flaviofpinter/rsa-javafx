@@ -1,4 +1,4 @@
-package dev.pinter.jfxapp.core;
+package dev.pinter.rsaapp.core;
 
 import javafx.scene.image.Image;
 

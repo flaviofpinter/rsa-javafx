@@ -1,6 +1,7 @@
-package dev.pinter.jfxapp.core;
+package dev.pinter.rsaapp.core;
 
 import javax.crypto.Cipher;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.*;
 import java.util.Base64;
@@ -11,11 +12,18 @@ public class Cryptography {
 
     }
 
-    public KeyPair keyPairGen() throws NoSuchAlgorithmException {
+    public KeyPair keyPairGen() throws NoSuchAlgorithmException, IOException {
         KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");
         generator.initialize(1024, new SecureRandom());
-        return generator.generateKeyPair();
+        KeyPair kpair = generator.generateKeyPair();
+
+        PublicKey publicKey = kpair.getPublic();
+        PrivateKey privateKey = kpair.getPrivate();
+
+
+        return kpair;
     }
+
 
     public String encrypt(String plainText, PublicKey publicKey) throws Exception {
         Cipher encryptCipher = Cipher.getInstance("RSA");

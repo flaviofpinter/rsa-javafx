@@ -2,7 +2,7 @@
  * Copyright (c) 2020. Emerson Pinter - All rights reserved.
  */
 
-package dev.pinter.jfxapp.gui;
+package dev.pinter.rsaapp.gui;
 
 import javafx.application.Platform;
 import javafx.stage.Stage;

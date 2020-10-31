@@ -1,29 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootAnchorPane" prefHeight="200.0" prefWidth="600.0" styleClass="rootAnchorPane" stylesheets="@main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.pinter.jfxapp.gui.MainController">
+<AnchorPane fx:id="rootAnchorPane" prefHeight="222.0" prefWidth="651.0" styleClass="rootAnchorPane" stylesheets="@main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.pinter.rsaapp.gui.MainController">
    <children>
-      <Label fx:id="mainDecisionLabel" layoutX="77.0" layoutY="34.0" prefHeight="57.0" prefWidth="400.0" text="%fxml.main.mainDecisionLabel" textAlignment="RIGHT" AnchorPane.leftAnchor="77.0">
+      <Label fx:id="rsaLabel" layoutX="14.0" prefHeight="19.0" prefWidth="61.0" text="RSA" textAlignment="RIGHT" textFill="#3a97dd">
          <font>
-            <Font size="17.0" />
-         </font></Label>
-      <Button fx:id="encryptionDecisionButton" layoutX="77.0" layoutY="109.0" mnemonicParsing="false" onAction="#encryptButtonAction" prefHeight="48.0" prefWidth="171.0" text="%fxml.main.encryptionDecisionButton">
-         <font>
-            <Font size="18.0" />
-         </font></Button>
-      <Button fx:id="decryptionDecisionButton" layoutX="306.0" layoutY="109.0" mnemonicParsing="false" onAction="#decryptButtonAction" prefHeight="48.0" prefWidth="171.0" text="%fxml.main.decryptionDecisionButton">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Button>
-      <Label fx:id="rsaLabel" layoutX="7.0" layoutY="6.0" prefHeight="27.0" prefWidth="103.0" text="RSA" textAlignment="RIGHT">
-         <font>
-            <Font size="19.0" />
+            <Font name="Lucida Sans Unicode" size="22.0" />
          </font>
       </Label>
+      <Label fx:id="mainLabel" layoutX="14.0" layoutY="34.0" prefHeight="50.0" prefWidth="637.0" text="%fxml.main.mainLabel" textFill="#418ce0">
+         <font>
+            <Font name="Lucida Sans Unicode" size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="messageField" layoutX="14.0" layoutY="91.0" prefHeight="25.0" prefWidth="208.0" />
+      <Button fx:id="encDecButton" layoutX="19.0" layoutY="133.0" mnemonicParsing="false" onAction="#encryptDecryptAction" prefHeight="36.0" prefWidth="114.0" text="Encrypt/Decrypt">
+         <cursor>
+            <Cursor fx:constant="CROSSHAIR" />
+         </cursor>
+      </Button>
+      <Label fx:id="encryptedLabel" layoutX="152.0" layoutY="5.0" prefHeight="26.0" prefWidth="273.0" text="%fxml.main.encryptedLabel" textFill="#3a88d7">
+         <font>
+            <Font name="Lucida Sans Unicode" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="decryptedLabel" layoutX="139.0" layoutY="148.0" prefHeight="26.0" prefWidth="273.0" text="%fxml.main.decryptedLabel" textFill="#3a88d7">
+         <font>
+            <Font name="Lucida Sans Unicode" size="16.0" />
+         </font>
+      </Label>
+      <TextField fx:id="resultField" layoutX="392.0" layoutY="4.0" prefHeight="29.0" prefWidth="231.0" />
+      <Label fx:id="resultLabel" layoutX="364.0" layoutY="152.0" prefHeight="18.0" prefWidth="237.0" textFill="#668eeb" />
    </children>
 </AnchorPane>
