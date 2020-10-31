@@ -28,6 +28,7 @@ import java.util.ResourceBundle;
 public class MainController implements Initializable {
     private static final Logger logger = LoggerFactory.getLogger(MainController.class);
 
+
     @FXML
     public Button encryptionDecisionButton;
 
@@ -40,8 +41,6 @@ public class MainController implements Initializable {
     @FXML
     public Label mainDecisionLabel;
 
-    public MainController() throws NoSuchAlgorithmException {
-    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -65,7 +64,6 @@ public class MainController implements Initializable {
         stage.setScene(scene3);
         stage.show();
     }
-
 
 //    private void changePaneBackground() {
 //        int red = newRandomInt();

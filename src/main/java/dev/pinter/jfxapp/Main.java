@@ -26,7 +26,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class Main extends Application {
     private static final Logger logger = LoggerFactory.getLogger(Main.class);
-    public KeyPair keys = new Cryptography().keyPairGen();
+
 
     public Main() throws NoSuchAlgorithmException {
     }
