@@ -1,4 +1,4 @@
-package dev.pinter.jfxapp.core;
+package dev.pinter.rsaapp.core;
 
 public class CryptoException extends Exception {
     public CryptoException() {

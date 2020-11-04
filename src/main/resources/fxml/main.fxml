@@ -5,9 +5,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootAnchorPane" prefHeight="200.0" prefWidth="600.0" styleClass="rootAnchorPane" stylesheets="@main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.pinter.jfxapp.gui.MainController">
+<AnchorPane fx:id="rootAnchorPane" prefHeight="200.0" prefWidth="600.0" styleClass="rootAnchorPane" stylesheets="@main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.pinter.rsaapp.gui.MainController">
    <children>
-      <Label fx:id="mainDecisionLabel" layoutX="77.0" layoutY="34.0" prefHeight="57.0" prefWidth="400.0" text="%fxml.main.mainDecisionLabel" textAlignment="RIGHT" textFill="#3a77e0" AnchorPane.leftAnchor="77.0">
+      <Label fx:id="mainDecisionLabel" layoutX="77.0" layoutY="34.0" prefHeight="57.0" prefWidth="519.0" text="%fxml.main.mainDecisionLabel" textAlignment="RIGHT" textFill="#3a77e0" AnchorPane.leftAnchor="77.0">
          <font>
             <Font size="17.0" />
          </font></Label>

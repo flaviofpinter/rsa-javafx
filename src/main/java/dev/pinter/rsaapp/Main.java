@@ -1,16 +1,14 @@
-package dev.pinter.jfxapp;
+package dev.pinter.rsaapp;
 
-import dev.pinter.jfxapp.core.Constants;
-import dev.pinter.jfxapp.core.Cryptography;
-import dev.pinter.jfxapp.core.Language;
-import dev.pinter.jfxapp.core.Util;
-import dev.pinter.jfxapp.gui.SystemTrayIcon;
+import dev.pinter.rsaapp.core.Constants;
+import dev.pinter.rsaapp.core.Language;
+import dev.pinter.rsaapp.core.Util;
+import dev.pinter.rsaapp.gui.SystemTrayIcon;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
@@ -21,7 +19,6 @@ import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
-import java.security.KeyPair;
 import java.security.NoSuchAlgorithmException;
 
 public class Main extends Application {

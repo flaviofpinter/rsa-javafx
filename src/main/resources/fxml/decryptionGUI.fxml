@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorDecrypt" prefHeight="200.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.pinter.jfxapp.gui.DecryptionGuiController">
+<AnchorPane fx:id="anchorDecrypt" prefHeight="200.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.pinter.rsaapp.gui.DecryptionGuiController">
    <children>
       <Label layoutX="62.0" layoutY="40.0" text="%fxml.decryptionGUI.decryptLabel" textFill="#416dfc">
          <font>

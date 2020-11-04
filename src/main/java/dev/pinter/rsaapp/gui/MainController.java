@@ -1,9 +1,6 @@
-package dev.pinter.jfxapp.gui;
+package dev.pinter.rsaapp.gui;
 
-import dev.pinter.jfxapp.Main;
-import dev.pinter.jfxapp.core.Constants;
-import dev.pinter.jfxapp.core.Cryptography;
-import dev.pinter.jfxapp.core.Language;
+import dev.pinter.rsaapp.core.Language;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +9,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
@@ -20,9 +16,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URL;
-import java.security.KeyPair;
-import java.security.NoSuchAlgorithmException;
-import java.util.Random;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {

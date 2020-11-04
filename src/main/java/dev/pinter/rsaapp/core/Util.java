@@ -2,7 +2,7 @@
  * Copyright (c) 2020. Emerson Pinter - All rights reserved.
  */
 
-package dev.pinter.jfxapp.core;
+package dev.pinter.rsaapp.core;
 
 import com.sun.jna.platform.win32.Advapi32Util;
 import com.sun.jna.platform.win32.Win32Exception;

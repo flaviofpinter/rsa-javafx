@@ -1,8 +1,7 @@
-package dev.pinter.jfxapp.gui;
+package dev.pinter.rsaapp.gui;
 
-import dev.pinter.jfxapp.Main;
-import dev.pinter.jfxapp.core.CryptoException;
-import dev.pinter.jfxapp.core.Cryptography;
+import dev.pinter.rsaapp.core.CryptoException;
+import dev.pinter.rsaapp.core.Cryptography;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,12 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 import java.net.URL;
-import java.security.InvalidKeyException;
-import java.security.KeyPair;
 import java.security.NoSuchAlgorithmException;
 import java.util.ResourceBundle;
 

@@ -14,10 +14,10 @@ targetCompatibility = 14
 
 OperatingSystem OS = DefaultNativePlatform.currentOperatingSystem
 
-ext.mainPackageName = "dev.pinter.jfxapp"
-ext.distAppName = "JavaFXApp"
-ext.appDescription = "JavaFX Application"
-ext.moduleName = 'jfxapp.main'
+ext.mainPackageName = "dev.pinter.rsaapp"
+ext.distAppName = "RSAApp"
+ext.appDescription = "RSA JavaFX Application"
+ext.moduleName = 'rsaapp.main'
 ext.appAuthor = 'Flavio Freitas Pinter'
 
 

@@ -1,4 +1,4 @@
-module jfxapp.main {
+module rsaapp.main {
     requires javafx.controls;
     requires java.base;
     requires javafx.fxml;
@@ -8,8 +8,8 @@ module jfxapp.main {
     requires static com.sun.jna.platform;
     requires static org.apache.commons.lang3;
     requires javafx.base;
-    exports dev.pinter.jfxapp.gui to javafx.fxml;
-    exports dev.pinter.jfxapp.core to javafx.fxml;
-    exports dev.pinter.jfxapp to javafx.graphics;
-    opens dev.pinter.jfxapp.gui to javafx.fxml;
+    exports dev.pinter.rsaapp.gui to javafx.fxml;
+    exports dev.pinter.rsaapp.core to javafx.fxml;
+    exports dev.pinter.rsaapp to javafx.graphics;
+    opens dev.pinter.rsaapp.gui to javafx.fxml;
 }
