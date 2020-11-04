@@ -82,12 +82,12 @@ public class Main extends Application {
                 Constants.TRAY_ICON,
                 Util.isUseDarkTheme());
 
-        systemTrayIcon.addMenuItem(Language.get().getMsg("fxml.main.helloWorldText"), e -> Platform.runLater(() -> {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle(Language.get().getMsg("fxml.main.helloWorldText"));
-            alert.setContentText(Language.get().getMsg("fxml.main.helloWorldText"));
-            alert.show();
-        }));
+//        systemTrayIcon.addMenuItem(Language.get().getMsg("fxml.main.helloWorldText"), e -> Platform.runLater(() -> {
+//            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//            alert.setTitle(Language.get().getMsg("fxml.main.helloWorldText"));
+//            alert.setContentText(Language.get().getMsg("fxml.main.helloWorldText"));
+//            alert.show();
+//        }));
 
         systemTrayIcon.addMenuItem(Language.get().getMsg("systray.menu.disableTray"), e -> Platform.runLater(() -> {
             primaryStage.show();

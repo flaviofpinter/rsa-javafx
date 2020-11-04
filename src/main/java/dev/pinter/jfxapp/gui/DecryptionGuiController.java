@@ -11,6 +11,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -22,8 +23,8 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ResourceBundle;
 
 public class DecryptionGuiController implements Initializable {
-
-
+    @FXML
+    public AnchorPane anchorDecrypt;
 
     @FXML
     public TextField decryptMessageField;
@@ -36,7 +37,8 @@ public class DecryptionGuiController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        anchorDecrypt.setStyle(String.format("-fx-background-color: #%02x%02x%02x", 15, 0, 110));
+        decryptButton.setStyle("-fx-background-color: #37a4ed");
     }
 
     @FXML

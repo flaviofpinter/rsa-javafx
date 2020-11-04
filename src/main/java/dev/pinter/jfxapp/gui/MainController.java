@@ -44,7 +44,9 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        rootAnchorPane.setStyle(String.format("-fx-background-color: #%02x%02x%02x", 15, 0, 110));
+        encryptionDecisionButton.setStyle("-fx-background-color: #37a4ed");
+        decryptionDecisionButton.setStyle("-fx-background-color: #37a4ed");
     }
 
     @FXML
@@ -70,7 +72,6 @@ public class MainController implements Initializable {
 //        int green = newRandomInt();
 //        int blue = newRandomInt();
 //
-//        rootAnchorPane.setStyle(String.format("-fx-background-color: #%02x%02x%02x", red, green, blue));
 //
 //        if (red < 128 && green < 128 && blue < 128) {
 //            helloWorldLabel.getStyleClass().add("labelWhiteText");

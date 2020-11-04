@@ -53,7 +53,6 @@ public class Cryptography {
     public String decrypt(String cipherText) throws CryptoException {
         System.out.println(pair);
 
-
         Cipher decriptCipher = null;
         try {
             byte[] bytes = Base64.getDecoder().decode(cipherText);

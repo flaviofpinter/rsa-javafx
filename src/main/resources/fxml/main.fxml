@@ -7,20 +7,20 @@
 
 <AnchorPane fx:id="rootAnchorPane" prefHeight="200.0" prefWidth="600.0" styleClass="rootAnchorPane" stylesheets="@main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.pinter.jfxapp.gui.MainController">
    <children>
-      <Label fx:id="mainDecisionLabel" layoutX="77.0" layoutY="34.0" prefHeight="57.0" prefWidth="400.0" text="%fxml.main.mainDecisionLabel" textAlignment="RIGHT" AnchorPane.leftAnchor="77.0">
+      <Label fx:id="mainDecisionLabel" layoutX="77.0" layoutY="34.0" prefHeight="57.0" prefWidth="400.0" text="%fxml.main.mainDecisionLabel" textAlignment="RIGHT" textFill="#3a77e0" AnchorPane.leftAnchor="77.0">
          <font>
             <Font size="17.0" />
          </font></Label>
-      <Button fx:id="encryptionDecisionButton" layoutX="77.0" layoutY="109.0" mnemonicParsing="false" onAction="#encryptButtonAction" prefHeight="48.0" prefWidth="171.0" text="%fxml.main.encryptionDecisionButton">
+      <Button fx:id="encryptionDecisionButton" layoutX="77.0" layoutY="109.0" mnemonicParsing="false" onAction="#encryptButtonAction" prefHeight="48.0" prefWidth="171.0" text="%fxml.main.encryptionDecisionButton" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font></Button>
-      <Button fx:id="decryptionDecisionButton" layoutX="306.0" layoutY="109.0" mnemonicParsing="false" onAction="#decryptButtonAction" prefHeight="48.0" prefWidth="171.0" text="%fxml.main.decryptionDecisionButton">
+      <Button fx:id="decryptionDecisionButton" layoutX="306.0" layoutY="109.0" mnemonicParsing="false" onAction="#decryptButtonAction" prefHeight="48.0" prefWidth="171.0" text="%fxml.main.decryptionDecisionButton" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Label fx:id="rsaLabel" layoutX="7.0" layoutY="6.0" prefHeight="27.0" prefWidth="103.0" text="RSA" textAlignment="RIGHT">
+      <Label fx:id="rsaLabel" layoutX="7.0" layoutY="6.0" prefHeight="27.0" prefWidth="103.0" text="RSA" textAlignment="RIGHT" textFill="#4f78ff">
          <font>
             <Font size="19.0" />
          </font>

@@ -6,15 +6,15 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="200.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.pinter.jfxapp.gui.DecryptionGuiController">
+<AnchorPane fx:id="anchorDecrypt" prefHeight="200.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.pinter.jfxapp.gui.DecryptionGuiController">
    <children>
-      <Label layoutX="62.0" layoutY="40.0" text="%fxml.decryptionGUI.decryptLabel">
+      <Label layoutX="62.0" layoutY="40.0" text="%fxml.decryptionGUI.decryptLabel" textFill="#416dfc">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
       <TextField fx:id="decryptMessageField" layoutX="131.0" layoutY="75.0" prefHeight="25.0" prefWidth="248.0" />
-      <Button fx:id="decryptButton" layoutX="188.0" layoutY="113.0" mnemonicParsing="false" onAction="#decryptButton" prefHeight="36.0" prefWidth="134.0" text="%fxml.decryptionGUI.decryptButton" />
-      <Label fx:id="decryptResultLabel" layoutX="14.0" layoutY="161.0" prefHeight="25.0" prefWidth="584.0" />
+      <Button fx:id="decryptButton" layoutX="188.0" layoutY="113.0" mnemonicParsing="false" onAction="#decryptButton" prefHeight="36.0" prefWidth="134.0" text="%fxml.decryptionGUI.decryptButton" textFill="WHITE" />
+      <Label fx:id="decryptResultLabel" layoutX="14.0" layoutY="161.0" prefHeight="25.0" prefWidth="584.0" textFill="#367bfc" />
    </children>
 </AnchorPane>
